@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>User Details</h2>
+<mat-dialog-content id="print-area">
+  <p><strong>ID:</strong> {{ user.id }}</p>
+  <p><strong>Username:</strong> {{ user.name }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <p><strong>Phone:</strong> {{ user.phone }}</p>
+  <p><strong>Address:</strong> {{ user.address }}</p>
+  <p><strong>Company:</strong> {{ user.company }}</p>
+  <p><strong>Job Title:</strong> {{ user.jobTitle }}</p>
+  <p><strong>Salary:</strong> £{{ user.salary }}</p>
+  <p><strong>Created At:</strong> {{ user.createdAt }}</p>
+  <p><strong>Last Login:</strong> {{ user.lastLogin }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="printUserDetails()">Print</button>
+  <button mat-button (click)="dialogRef.close()">Close</button>
+</mat-dialog-actions>
