@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { UserDetailsDialogComponent } from './user-details-dialog/user-details-dialog.component';
 import { AggridserverComponent } from './aggridserver/aggridserver.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AggridserverComponent } from './aggridserver/aggridserver.component';
     AgGridModule,
     MatDialogModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

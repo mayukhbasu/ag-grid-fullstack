@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { GridOptions, IGetRowsParams } from 'ag-grid-community';
+import { GridApi, GridOptions, IGetRowsParams } from 'ag-grid-community';
 import { UserDetailsDialogComponent } from '../user-details-dialog/user-details-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -11,43 +11,54 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AggridserverComponent {
   columnDefs = [
-    { 
-      field: 'name', 
-      headerName: 'Username', 
-      flex: 1, 
-      cellClass: 'hover-underline', 
-      onCellClicked: (event: any) => this.openUserDetails(event.data) // Open modal on click
-    }
+    { field: 'name', headerName: 'Username', flex: 1 }
   ];
 
   rowData: any[] = [];
   gridOptions: GridOptions = {
-    paginationPageSize: 10,
-    enableCellTextSelection: true
+    paginationPageSize: 10
   };
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {}
+  searchQuery: string = '';
+  gridApi!: GridApi; // Store Grid API reference
 
+  constructor(private http: HttpClient) {}
+
+  // Store Grid API reference when grid is ready
   onGridReady(params: any) {
-    params.api.setDatasource({
+    this.gridApi = params.api; // ✅ Store Grid API reference
+    this.gridApi.setDatasource(this.createDataSource(this.searchQuery)); // ✅ Call with initial search
+  }
+
+  // Function to create the datasource
+  createDataSource(search: string) {
+    return {
       getRows: (params: IGetRowsParams) => {
         const page = params.startRow / 10 + 1;
         const pageSize = 10;
 
-        this.http.get(`http://localhost:3000/users?page=${page}&size=${pageSize}`)
+        this.http.get(`http://localhost:3000/users?page=${page}&size=${pageSize}&search=${search}`)
           .subscribe((data: any) => {
-            params.successCallback(data.records, data.total);
+            if (params.successCallback) {
+              params.successCallback(data.records, data.total);
+            }
           }, error => {
-            params.failCallback();
+            if (params.failCallback) {
+              params.failCallback();
+            }
           });
       }
-    });
+    };
   }
 
-  openUserDetails(user: any) {
-    this.dialog.open(UserDetailsDialogComponent, {
-      width: '400px',
-      data: user
-    });
+  // Search function to update datasource
+  onSearchClick() {
+    if (!this.gridApi) {
+      console.error("Grid API is not ready yet.");
+      return;
+    }
+
+    // ✅ Set new data source for search query
+    this.gridApi.setDatasource(this.createDataSource(this.searchQuery));
   }
 }
