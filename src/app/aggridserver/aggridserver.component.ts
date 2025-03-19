@@ -11,8 +11,19 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AggridserverComponent {
   columnDefs = [
-    { field: 'name', headerName: 'Username', flex: 1 }
+    { field: 'name', headerName: 'Username', flex: 1, cellClass: 'hover-underline', 
+      onCellClicked: (event: any) => this.openUserDetails(event.data) 
+    },
+    { field: 'email', headerName: 'Email', flex: 1 },
+    { field: 'phone', headerName: 'Phone', flex: 1 },
+    { field: 'address', headerName: 'Address', flex: 1 },
+    { field: 'company', headerName: 'Company', flex: 1 },
+    { field: 'jobTitle', headerName: 'Job Title', flex: 1 },
+    { field: 'salary', headerName: 'Salary (£)', flex: 1 },
+    { field: 'createdAt', headerName: 'Created At', flex: 1, valueFormatter: params => new Date(params.value).toLocaleString() },
+    { field: 'lastLogin', headerName: 'Last Login', flex: 1, valueFormatter: params => new Date(params.value).toLocaleString() }
   ];
+  
 
   rowData: any[] = [];
   gridOptions: GridOptions = {
@@ -22,7 +33,7 @@ export class AggridserverComponent {
   searchQuery: string = '';
   gridApi!: GridApi; // Store Grid API reference
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public dialog: MatDialog) {}
 
   // Store Grid API reference when grid is ready
   onGridReady(params: any) {
@@ -60,5 +71,12 @@ export class AggridserverComponent {
 
     // ✅ Set new data source for search query
     this.gridApi.setDatasource(this.createDataSource(this.searchQuery));
+  }
+
+  openUserDetails(user: any) {
+    this.dialog.open(UserDetailsDialogComponent, {
+      width: '400px',
+      data: user
+    });
   }
 }

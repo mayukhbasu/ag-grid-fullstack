@@ -7,9 +7,15 @@
   cursor: pointer;
 }
 
-.hover-underline:hover {
-  text-decoration: underline;
-  cursor: pointer;
-  color: blue;
+.hover-underline {
+  transition: color 0.3s ease-in-out, text-decoration-color 0.3s ease-in-out;
 }
 
+/* Hover effect: Fidelity Green text + Thin underline */
+.hover-underline:hover {
+  color: #00A878 !important;  /* Fidelity green text */
+  text-decoration: underline;
+  text-decoration-color: #00A878;  /* Fidelity green underline */
+  text-decoration-thickness: 1.5px;  /* Thinner underline */
+  cursor: pointer;
+}

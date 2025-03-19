@@ -1,17 +1,26 @@
-<h2 mat-dialog-title>User Details</h2>
-<mat-dialog-content id="print-area">
-  <p><strong>ID:</strong> {{ user.id }}</p>
-  <p><strong>Username:</strong> {{ user.name }}</p>
-  <p><strong>Email:</strong> {{ user.email }}</p>
-  <p><strong>Phone:</strong> {{ user.phone }}</p>
-  <p><strong>Address:</strong> {{ user.address }}</p>
-  <p><strong>Company:</strong> {{ user.company }}</p>
-  <p><strong>Job Title:</strong> {{ user.jobTitle }}</p>
-  <p><strong>Salary:</strong> £{{ user.salary }}</p>
-  <p><strong>Created At:</strong> {{ user.createdAt }}</p>
-  <p><strong>Last Login:</strong> {{ user.lastLogin }}</p>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="printUserDetails()">Print</button>
+<div id="print-area">
+  <div class="container-fluid user-details-container">
+    <!-- Print Header -->
+    <div class="print-header d-none d-print-block text-center">
+      <h2 class="mb-3">User Details</h2>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-md-6 detail-item"><strong>ID:</strong> {{ user.id }}</div>
+      <div class="col-12 col-md-6 detail-item"><strong>Username:</strong> {{ user.name }}</div>
+      <div class="col-12 col-md-6 detail-item"><strong>Email:</strong> {{ user.email }}</div>
+      <div class="col-12 col-md-6 detail-item"><strong>Phone:</strong> {{ user.phone }}</div>
+      <div class="col-12 col-md-6 detail-item"><strong>Address:</strong> {{ user.address }}</div>
+      <div class="col-12 col-md-6 detail-item"><strong>Company:</strong> {{ user.company }}</div>
+      <div class="col-12 col-md-6 detail-item"><strong>Job Title:</strong> {{ user.jobTitle }}</div>
+      <div class="col-12 col-md-6 detail-item"><strong>Salary:</strong> £{{ user.salary }}</div>
+      <div class="col-12 col-md-6 detail-item"><strong>Created At:</strong> {{ user.createdAt | date:'medium' }}</div>
+      <div class="col-12 col-md-6 detail-item"><strong>Last Login:</strong> {{ user.lastLogin | date:'medium' }}</div>
+    </div>
+  </div>
+</div>
+
+<mat-dialog-actions class="mt-3 text-end">
+  <button mat-raised-button color="primary" (click)="printUserDetails()">🖨️ Print</button>
   <button mat-button (click)="dialogRef.close()">Close</button>
 </mat-dialog-actions>

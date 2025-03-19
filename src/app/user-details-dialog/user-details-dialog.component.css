@@ -1,0 +1,46 @@
+/* Container styling */
+.user-details-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Each row item */
+.detail-item {
+  font-size: 16px;
+  color: #333;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Strong labels */
+.detail-item strong {
+  color: #00A878; /* Fidelity Green */
+}
+
+/* Print styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #print-area,
+  #print-area * {
+    visibility: visible;
+  }
+
+  #print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    background: white;
+  }
+
+  .print-header {
+    display: block !important;
+    margin-bottom: 10px;
+  }
+}
