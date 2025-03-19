@@ -18,16 +18,28 @@ const users = Array.from({ length: 10000 }, (_, i) => ({
   lastLogin: new Date(2024, i % 12, (i % 28) + 1).toISOString()
 }));
 
-// API for paginated user data (returns full user object)
+// API for paginated user data with search functionality
 app.get('/users', (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const size = parseInt(req.query.size) || 10;
+  const searchQuery = req.query.search ? req.query.search.toLowerCase() : '';
+
+  // Filter users based on search query
+  let filteredUsers = users;
+  if (searchQuery) {
+    filteredUsers = users.filter(user => 
+      user.name.toLowerCase().includes(searchQuery) ||
+      user.email.toLowerCase().includes(searchQuery) ||
+      user.company.toLowerCase().includes(searchQuery)
+    );
+  }
+
   const startIndex = (page - 1) * size;
   const endIndex = startIndex + size;
 
   res.json({
-    records: users.slice(startIndex, endIndex),  // Returns all user data
-    total: users.length
+    records: filteredUsers.slice(startIndex, endIndex),
+    total: filteredUsers.length
   });
 });
 
